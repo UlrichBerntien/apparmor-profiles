@@ -1,4 +1,4 @@
-# Apparmor profiles collection
+﻿# Apparmor profiles collection
 
 [Apparmor](https://apparmor.net/) profiles I created or optimized for my usage.
 
@@ -15,4 +15,12 @@ and
 
 ```
 apt install apparmor-utils apparmor-profiles-extra
+```
+
+## Profile development
+
+To start with a new profile I use the aa-genprof tool according to the tips given in [apparmor>Wiki>Profiling_with_tools](https://gitlab.com/apparmor/apparmor/-/wikis/Profiling_with_tools).
+
+```
+aa-genprof <executable>
 ```

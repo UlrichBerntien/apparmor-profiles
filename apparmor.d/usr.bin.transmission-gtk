@@ -1,0 +1,27 @@
+# Last Modified: Thu Apr 30 10:40:13 2020
+#include <tunables/global>
+
+# Restrictions:
+# - Shared files are stored in ~/Downloads only.
+#   No other location should be useable for the shared files.
+# - root should not run transmission.
+
+
+/usr/bin/transmission-gtk {
+  #include <abstractions/base>
+  #include <abstractions/dbus-session-strict>
+  #include <abstractions/dconf>
+  #include <abstractions/lightdm>
+
+  # No update of the Desktop recently used list.
+  deny owner @{HOME}/.local/share/recently-used.* rw,
+
+  @{PROC}/@{pid}/net/route r,
+  @{PROC}/sys/kernel/random/uuid r,
+  owner @{PROC}/@{pid}/mounts r,
+
+  owner @{HOME}/** r,
+  owner @{HOME}/.cache/transmission/** rw,
+  owner @{HOME}/.config/transmission/** rw,
+  owner @{HOME}/Downloads/** rw,
+}
