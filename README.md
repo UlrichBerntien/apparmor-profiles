@@ -24,3 +24,19 @@ To start with a new profile I use the aa-genprof tool according to the tips give
 ```
 aa-genprof <executable>
 ```
+
+To test a profile: Run bash with the permissions of the profile.
+```
+aa-exec -p <Profilename> -- bash
+```
+
+The Profilename is the name of the profile defined inside the profile.
+E.g. to test the profile stored in apparmor.d/usr.bin.transmission-gtk call:
+```
+aa-exec -p /usr/bin/transmission-gtk -- bash
+```
+The program aa-exec could be used as normal user and as root.
+The tool is **not** restricted for root.
+
+After editing a profile don't forget to replace the profile
+in the kernel with "apparmor_parser -r <Profilefile>"

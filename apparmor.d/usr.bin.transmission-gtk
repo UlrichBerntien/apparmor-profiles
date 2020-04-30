@@ -6,22 +6,24 @@
 #   No other location should be useable for the shared files.
 # - root should not run transmission.
 
-
 /usr/bin/transmission-gtk {
   #include <abstractions/base>
   #include <abstractions/dbus-session-strict>
   #include <abstractions/dconf>
   #include <abstractions/lightdm>
 
-  # No update of the Desktop recently used list.
-  deny owner @{HOME}/.local/share/recently-used.* rw,
-
   @{PROC}/@{pid}/net/route r,
   @{PROC}/sys/kernel/random/uuid r,
   owner @{PROC}/@{pid}/mounts r,
 
-  owner @{HOME}/** r,
-  owner @{HOME}/.cache/transmission/** rw,
-  owner @{HOME}/.config/transmission/** rw,
-  owner @{HOME}/Downloads/** rw,
+  # Here is use /home/*/ and not /home/* because /root should not be used.
+  owner /home/*/.cache/transmission/** rw,
+  owner /home/*/.config/transmission/** rw,
+  owner /home/*/Downloads/** rw,
+
+  # needed to parse directory in /home tree
+  /home/** r,
+
+  # No update of the Desktop recently used list.
+  deny owner /home/*/.local/share/recently-used.* rw,
 }
