@@ -1,29 +1,24 @@
+# vim:syntax=apparmor
 # Last Modified: Thu Apr 30 10:40:13 2020
 #include <tunables/global>
-
-# Restrictions:
-# - Shared files are stored in ~/Downloads only.
-#   No other location should be useable for the shared files.
-# - root should not run transmission.
 
 /usr/bin/transmission-gtk {
   #include <abstractions/base>
   #include <abstractions/dbus-session-strict>
   #include <abstractions/dconf>
   #include <abstractions/lightdm>
+  #include <abstractions/user-download>
+  
+  network packet,
+  network stream,
 
   @{PROC}/@{pid}/net/route r,
   @{PROC}/sys/kernel/random/uuid r,
   owner @{PROC}/@{pid}/mounts r,
 
-  # Here is use /home/*/ and not /home/* because /root should not be used.
-  owner /home/*/.cache/transmission/** rw,
-  owner /home/*/.config/transmission/** rw,
-  owner /home/*/Downloads/** rw,
-
-  # needed to parse directory in /home tree
-  /home/** r,
+  owner @{HOME}/.cache/transmission/** rw,
+  owner @{HOME}/.config/transmission/** rw,
 
   # No update of the Desktop recently used list.
-  deny owner /home/*/.local/share/recently-used.* rw,
+  deny owner @{HOME}/local/share/recently-used.* rw,
 }
