@@ -1,0 +1,15 @@
+# vim:syntax=apparmor
+#include <tunables/global>
+
+/usr/bin/parole {
+  #include <abstractions/base>
+  #include <abstractions/dbus-session-strict>
+  #include <abstractions/lightdm>
+
+  # totem include allow read in all directories
+  #include <abstractions/totem>
+
+  # No update of recently used
+  deny owner @{HOME}/.local/share/recently-used.* w,
+
+}
