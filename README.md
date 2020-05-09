@@ -40,3 +40,11 @@ The tool is **not** restricted for root.
 
 After editing a profile don't forget to replace the profile
 in the kernel with "apparmor_parser -r <Profilefile>"
+
+## Logging
+
+The files
+- rsyslog.d/30-apparmor.conf
+- logrotate.d/apparmor
+
+configure a logging of the AppArmor kernel messages into /var/log/apparmor.log with logrotation.
