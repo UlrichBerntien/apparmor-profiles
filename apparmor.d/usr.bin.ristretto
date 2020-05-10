@@ -1,0 +1,16 @@
+# vim:syntax=apparmor
+#include <tunables/global>
+
+/usr/bin/ristretto {
+  #include <abstractions/base>
+  #include <abstractions/dbus-session-strict>
+  #include <abstractions/lightdm>
+
+  # Allow read on all directories
+  /**/ r,
+
+  owner @{HOME}/.config/ristretto/** rw,
+
+  # No update of recently used
+  deny owner @{HOME}/.local/share/recently-used.* w,
+}
