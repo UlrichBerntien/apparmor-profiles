@@ -7,8 +7,9 @@
   #include <abstractions/lightdm>
 
   # Allow read on all directories
-  /**/ r,
+  /** r,
 
+  # Allow configuration changes
   owner @{HOME}/.config/ristretto/** rw,
 
   # No update of recently used
